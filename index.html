@@ -51,7 +51,7 @@
             <div class="row"><div><label for="make">Značka</label><input id="make" placeholder="Škoda" /></div><div><label for="model">Model</label><input id="model" placeholder="Octavia III" /></div></div>
             <div class="row"><div><label for="year">Modelový rok</label><input id="year" inputmode="numeric" maxlength="4" placeholder="2016" /></div><div><label for="fuel">Palivo</label><input id="fuel" placeholder="Nafta" /></div></div>
             <div class="row"><div><label for="engine">Motor / objem</label><input id="engine" placeholder="2.0 TDI / 1968 cm³" /></div><div><label for="power">Výkon (kW)</label><input id="power" inputmode="decimal" placeholder="110" /></div></div>
-            <div class="row"><div><label for="plate">SPZ / RZ</label><input id="plate" placeholder="1AB 2345" autocapitalize="characters" /></div><div><label for="km">Stav km</label><input id="km" type="number" min="0" placeholder="183500" /></div></div>
+            <div class="row"><div><label for="plate">SPZ / RZ</label><input id="plate" autocomplete="off" autocapitalize="characters" /></div><div><label for="km">Stav km</label><input id="km" type="number" min="0" autocomplete="off" /></div></div>
           </section>
         </div>
         <div class="rightcol">
@@ -85,7 +85,7 @@
   <script>
   'use strict';
   const $ = id => document.getElementById(id);
-  const fields = ['vin','make','model','year','fuel','engine','power','plate','km','mechanic','customer','phone','work','deadline'];
+  const fields = ['vin','make','model','year','fuel','engine','power','km','mechanic','customer','phone','work','deadline'];
   const storeKey='servis_carpek_demo_v1';
   let jobs = [];
   try {const data=JSON.parse(localStorage.getItem(storeKey)||'[]');jobs=Array.isArray(data)?data:[]}catch(_){jobs=[]}
