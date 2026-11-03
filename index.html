@@ -85,7 +85,7 @@
   <script>
   'use strict';
   const $ = id => document.getElementById(id);
-  const fields = ['vin','make','model','year','fuel','engine','power','km','mechanic','customer','phone','work','deadline'];
+  const fields = ['vin','make','model','year','fuel','engine','power','plate','km','mechanic','customer','phone','work','deadline'];
   const storeKey='servis_carpek_demo_v1';
   let jobs = [];
   try {const data=JSON.parse(localStorage.getItem(storeKey)||'[]');jobs=Array.isArray(data)?data:[]}catch(_){jobs=[]}
@@ -96,7 +96,7 @@
   function status(element, message, type=''){element.textContent=message;element.className='status'+(type?' '+type:'')}
   function setTab(tab){$('pageNew').classList.toggle('hidden',tab!=='new');$('pageJobs').classList.toggle('hidden',tab!=='jobs');$('navNew').classList.toggle('active',tab==='new');$('navJobs').classList.toggle('active',tab==='jobs');if(tab==='jobs')renderJobs();window.scrollTo({top:0,behavior:'smooth'});}
   $('navNew').addEventListener('click',()=>setTab('new'));$('navJobs').addEventListener('click',()=>setTab('jobs'));
-  function fillCar(car){for(const k of ['make','model','year','fuel','engine','power','plate']){if(car[k])$(k).value=car[k]}}
+  function fillCar(car){for(const k of ['make','model','year','fuel','engine','power']){if(car[k])$(k).value=car[k]}}
   function checkDuplicate(vin){const out=$('duplicate');out.classList.add('hidden');if(!validVin(vin))return null;const related=jobs.filter(j=>j.vin===vin);if(!related.length)return null;const open=related.find(j=>!['Předáno','Zrušeno'].includes(j.status));out.classList.remove('hidden');if(open){status(out,`⚠️ Toto VIN už má otevřenou zakázku #${open.id} (${open.status}, mechanik: ${open.mechanic}). Nezakládej druhou – otevři existující zakázku v přehledu.`, 'warn');}else{status(out,`ℹ️ Vozidlo už v servisu bylo (${related.length} dokončených zakázek). Dostupné údaje vozidla byly načteny z historie.`, 'good');}fillCar(related[0]);return {related,open}}
   function onVinEdited(){let s=norm($('vin').value);$('vin').value=s;$('vinCount').textContent=s.length+'/17 znaků · '+(validVin(s)?'správný formát; ověř znaky podle štítku': 'VIN musí mít 17 znaků, nepoužívá I, O, Q');checkDuplicate(s);if(lastLookup!==s)$('decodeStatus').textContent='Pro doplnění technických údajů klepni na „Zkontrolovat VIN a doplnit auto“.'}
   $('vin').addEventListener('input',onVinEdited);
